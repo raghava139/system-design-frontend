@@ -76,10 +76,24 @@ const resolvers = {
             return statesData.filter((d) => d.countryId === parent.countryId)
         }
     },
-    state:{
-     cities:(parent)=>{
-        return citiesData.filter((data)=>data.stateId === parent.stateId)
-     } 
+    state: {
+        cities: (parent) => {
+            return citiesData.filter((data) => data.stateId === parent.stateId)
+        }
+    },
+    Mutation: {
+        createCountry: (parent, args, context, info) => {
+            if (!args.countryCode.trim()) {
+                throw new Error("countryCode cannot be empty");
+            }
+
+            if (!args.countryName.trim()) {
+                throw new Error("countryName cannot be empty");
+            }
+            let newCountry = { countryCode: args.countryCode, countryName: args.countryName, countryId: String(countriesData.length + 1) }
+            countriesData.push(newCountry)
+            return newCountry;
+        }
     }
 }
 export default resolvers;

@@ -26,5 +26,9 @@ const typeDefs = `
         states : [state],
         cities : [city]
     }
+
+    type Mutation {
+        createCountry(countryCode:String!,countryName:String!): country
+    }
 `;
 export default typeDefs;
