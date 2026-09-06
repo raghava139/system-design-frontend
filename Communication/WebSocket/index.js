@@ -15,7 +15,6 @@ const io = new Server(realServer, {
 
 
 io.on('connection', (socket) => {
-
     socket.on('send_message', (message) => {
         console.log('recieved the message:', message)
 

@@ -35,7 +35,7 @@
     button.addEventListener("click", () => {
 
       const message = input.value;
-
+        // socket.emit("event_name", data) => emit means send the data
       socket.emit("send_message", message);
 
       input.value = "";
