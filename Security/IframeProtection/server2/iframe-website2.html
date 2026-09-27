@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>child Data Theft via Javascript</title>
+</head>
+
+<body>
+    <h1>child data theft via javascript</h1>
+    <h1>Malicious iframe</h1>
+    <p> this iframe attempts to steal the data from the parent window.</p>
+    <script>
+        window.alert('hi');
+        window.onload = function () {
+            try {
+                const parentWindow = window.parent;
+                const parentDocument = parentWindow.document;
+
+                const stolenData = parentDocument.innerHtml;
+                alert('stolen data: ' + stolenData);
+            } catch (error) {
+                console.log("Data Theft Failed:" + error);
+            }
+        }
+    </script>
+</body>
+
+</html>

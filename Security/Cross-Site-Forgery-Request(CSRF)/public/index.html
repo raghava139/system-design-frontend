@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bank App</title>
+</head>
+
+<body>
+
+  <h1>My Bank</h1>
+
+  <p>
+    <a href="/login">Login</a>
+  </p>
+
+  <hr>
+
+  <h2>Vulnerable Transfer</h2>
+
+  <form action="/vulnerable-transfer" method="POST">
+
+    <label>Amount:</label>
+    <input
+      type="number"
+      name="amount"
+      value="1000"
+    >
+
+    <label>To:</label>
+    <input
+      type="text"
+      name="to"
+      value="attacker"
+    >
+
+    <button type="submit">
+      Transfer
+    </button>
+
+  </form>
+
+  <hr>
+
+  <h2>Protected Transfer</h2>
+
+  <form id="secureForm">
+
+    <label>Amount:</label>
+    <input
+      type="number"
+      name="amount"
+      value="1000"
+    >
+
+    <label>To:</label>
+    <input
+      type="text"
+      name="to"
+      value="friend"
+    >
+
+    <button type="submit">
+      Secure Transfer
+    </button>
+
+  </form>
+
+  <p id="result"></p>
+
+  <script>
+    let csrfToken;
+
+    // Get CSRF token
+    fetch("/csrf-token")
+      .then(response => response.json())
+      .then(data => {
+        csrfToken = data.csrfToken;
+      });
+
+    document
+      .getElementById("secureForm")
+      .addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+
+        formData.append("csrfToken", csrfToken);
+
+        const response = await fetch("/secure-transfer", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: new URLSearchParams(formData)
+        });
+
+        document.getElementById("result").textContent =
+          await response.text();
+      });
+  </script>
+
+</body>
+</html>
